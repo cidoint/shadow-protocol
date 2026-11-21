@@ -1,6 +1,6 @@
 // Shadow Protocol entry program (Node 22, standard library only): copies the static
-// game and the screenshots to /output and writes the dossier with the vendored
-// make.fun library. Outside the grader, MAKEFUN_OUTPUT_DIR stands in for /output.
+// game and the screenshots to the output directory and writes the dossier with the
+// vendored make.fun library. Outside the grader, MAKEFUN_OUTPUT_DIR stands in for /output.
 
 import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -12,8 +12,9 @@ const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
 mkdirSync(out, { recursive: true });
 cpSync(join(here, 'game'), join(out, 'game'), { recursive: true });
-mkdirSync(join(out, 'screenshots'), { recursive: true });
-if (existsSync(join(here, 'screenshots'))) cpSync(join(here, 'screenshots'), join(out, 'screenshots'), { recursive: true });
+if (existsSync(join(here, 'screenshots'))) {
+  cpSync(join(here, 'screenshots'), join(out, 'screenshots'), { recursive: true });
+}
 
 writeFileSync(
   join(out, 'dossier.json'),
